@@ -3,9 +3,6 @@ import random
 import telegram
 from dotenv import load_dotenv
 import os
-import asyncio
-
-
 
 
 def get_image(image_num):
@@ -33,19 +30,23 @@ def number_comics():
     return image_num
 
 
-async def tg_bot(filename, comment):
-    load_dotenv()
-    tg_key = os.environ["TELEGRAM_KEY"]
-    chat_id = os.environ["CHAT_ID"]
+def tg_bot(filename, comment, tg_key, chat_id):
     bot = telegram.Bot(token=tg_key)
     with open(filename, 'rb') as file:
-        await bot.send_photo(chat_id=chat_id, photo=file, caption=comment)
+        bot.send_photo(chat_id=chat_id, photo=file, caption=comment)
     os.remove(filename)
 
 
-if __name__ == "__main__":
+def main():
+    load_dotenv()
+    tg_key = os.environ["TG_BOT_TOKEN"]
+    chat_id = os.environ["TG_CHAT_ID"]
     filename = "image.png" 
     image_num = number_comics()
     image, comment = get_image(image_num)
     download_image(image, filename)
-    asyncio.run(tg_bot(filename, comment))
+    tg_bot(filename, comment, tg_key, chat_id)
+
+
+if __name__ == "__main__":
+    main()
