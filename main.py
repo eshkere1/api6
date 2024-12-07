@@ -9,8 +9,9 @@ def get_image(image_num):
     url = f"https://xkcd.com/{image_num}/info.0.json"
     response = requests.get(url)
     response.raise_for_status()
-    image = response.json()["img"]
-    comment = response.json()["alt"]
+    comics_info = response.json()
+    image = comics_info["img"]
+    comment = comics_info["alt"]
     return image, comment
 
   
