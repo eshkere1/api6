@@ -22,7 +22,7 @@
 
 ## Пример запуска 
 
-    ```bash
+    ```python
     python main.py
     ```
 
