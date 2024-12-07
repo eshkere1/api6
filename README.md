@@ -22,9 +22,7 @@
 
 ## Пример запуска 
 
-    ```python
-    python main.py
-    ```
+   ```python main.py```
 
 ### Цель проекта
 
