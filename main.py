@@ -22,7 +22,7 @@ def download_image(url, filename):
         file.write(response.content)
 
 
-def number_comics():
+def get_number_comics():
     url = "https://xkcd.com/info.0.json"
     response = requests.get(url)
     response.raise_for_status()
@@ -31,7 +31,7 @@ def number_comics():
     return image_num
 
 
-def tg_bot(filename, comment, tg_key, chat_id):
+def publish_comic(filename, comment, tg_key, chat_id):
     bot = telegram.Bot(token=tg_key)
     with open(filename, 'rb') as file:
         bot.send_photo(chat_id=chat_id, photo=file, caption=comment)
@@ -44,10 +44,10 @@ def main():
         tg_key = os.environ["TG_BOT_TOKEN"]
         chat_id = os.environ["TG_CHAT_ID"]
         filename = "image.png" 
-        image_num = number_comics()
+        image_num = get_number_comics()
         image, comment = get_image(image_num)
         download_image(image, filename)
-        tg_bot(filename, comment, tg_key, chat_id)
+        publish_comic(filename, comment, tg_key, chat_id)
     finally:
         os.remove(filename)
 
