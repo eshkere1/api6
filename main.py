@@ -34,18 +34,21 @@ def tg_bot(filename, comment, tg_key, chat_id):
     bot = telegram.Bot(token=tg_key)
     with open(filename, 'rb') as file:
         bot.send_photo(chat_id=chat_id, photo=file, caption=comment)
-    os.remove(filename)
+    
 
 
 def main():
     load_dotenv()
-    tg_key = os.environ["TG_BOT_TOKEN"]
-    chat_id = os.environ["TG_CHAT_ID"]
-    filename = "image.png" 
-    image_num = number_comics()
-    image, comment = get_image(image_num)
-    download_image(image, filename)
-    tg_bot(filename, comment, tg_key, chat_id)
+    try:
+        tg_key = os.environ["TG_BOT_TOKEN"]
+        chat_id = os.environ["TG_CHAT_ID"]
+        filename = "image.png" 
+        image_num = number_comics()
+        image, comment = get_image(image_num)
+        download_image(image, filename)
+        tg_bot(filename, comment, tg_key, chat_id)
+    finally:
+        os.remove(filename)
 
 
 if __name__ == "__main__":
